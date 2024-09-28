@@ -32,7 +32,6 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -57,6 +56,14 @@ class JobController extends Controller
         // Harcoded user_id
         $validatedData['user_id'] = 1;
 
+        // Check for imate
+        if ($request->hasFile('company_logo')) {
+            // Store the file and get path
+            $path = $request->file('company_logo')->store('logos', 'public');
+
+            $validatedData['company_logo'] = $path;
+        }
+
         // Submit to database
         Job::create($validatedData);
 
@@ -74,9 +81,9 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): string
+    public function edit(Job $job): View
     {
-        return 'Edit';
+        return view('jobs.edit')->with('job', $job);
     }
 
     /**
