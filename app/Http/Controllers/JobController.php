@@ -37,7 +37,7 @@ class JobController extends Controller
             'description' => 'required|string',
         ]);
 
-        Job::create($validateData);
+        // Job::create($validateData);
 
         return redirect()->route('jobs.index');
     }
