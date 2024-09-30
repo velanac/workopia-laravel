@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -55,7 +56,7 @@ class JobController extends Controller
         ]);
 
         // Harcoded user_id
-        $validatedData['user_id'] = 1;
+        $validatedData['user_id'] = Auth::user()->id;
 
         // Check for imate
         if ($request->hasFile('company_logo')) {
