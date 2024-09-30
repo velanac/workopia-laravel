@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -85,6 +87,8 @@ class JobController extends Controller
      */
     public function edit(Job $job): View
     {
+        $this->authorize('edit', $job);
+
         return view('jobs.edit')->with('job', $job);
     }
 
@@ -93,6 +97,9 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job): string
     {
+        // Check if user is authorize
+        $this->authorize('update', $job);
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -135,6 +142,9 @@ class JobController extends Controller
      */
     public function destroy(Job $job): RedirectResponse
     {
+        // Check if user is authorize
+        $this->authorize('delete', $job);
+
         // If logo, then delete it
         if ($job->company_logo) {
             Storage::delete('public/logos/' . $job->company_logo);
