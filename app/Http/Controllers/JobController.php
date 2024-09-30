@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
@@ -23,7 +23,7 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
         return view('jobs.create');
     }
