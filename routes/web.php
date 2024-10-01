@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookmarkController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\LogRequest;
 use App\Http\Controllers\JobController;
@@ -21,7 +22,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+});
