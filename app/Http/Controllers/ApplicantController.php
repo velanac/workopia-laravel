@@ -14,6 +14,13 @@ class ApplicantController extends Controller
     // @route POST /jobs/{job}/apply
     public function store(CreateApplicationRequest $request, Job $job): RedirectResponse
     {
+        // Check if the user has already applied
+        $existingApplicaion = Applicant::where('job_id', $job->id)->where('user_id', Auth::user()->id)->exists();
+
+        if ($existingApplicaion) {
+            return redirect()->back()->with('error', 'You have already applied to this job');
+        }
+
         // Validate data
         $validateData = $request->validated();
 
@@ -30,5 +37,16 @@ class ApplicantController extends Controller
         $application->save();
 
         return redirect()->back()->with('success', 'Your applicaiton has been submitted');
+    }
+
+    // @desc Delete job application
+    // @route Delete /applicants/{applicant}
+    public function destory($id): RedirectResponse
+    {
+        // Validate data
+        $application = Applicant::findOrFail($id);
+        $application->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Aplicaiton deleted successfully!');
     }
 }
