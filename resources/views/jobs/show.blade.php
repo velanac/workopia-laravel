@@ -1,5 +1,8 @@
 <x-layout>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {{-- @if ($errors->any())
+            {!! implode('', $errors->all('<div>:message</div>')) !!}
+        @endif --}}
         <!-- Job Details Column -->
         <section class="md:col-span-3">
             <div class="rounded-lg shadow-md bg-white p-3">
@@ -92,7 +95,8 @@
                                 <h3 class="text-lg font-semibold mb-4">
                                     Apply For {{ $job->title }}
                                 </h3>
-                                <form method="POST" action="" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('applicant.store', $job) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <x-inputs.text id="full_name" name="full_name" label="Full Name" :required="true" />
                                     <x-inputs.text id="contact_phone" name="contact_phone" label="Contact Phone" />

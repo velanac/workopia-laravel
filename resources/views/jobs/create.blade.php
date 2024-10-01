@@ -11,7 +11,6 @@
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
                 Job Info
             </h2>
-            {{-- <x-inputs.text id="id" name="id" placeholder='Id set' label="Lala" /> --}}
             <x-inputs.text id="title" name="title" placeholder='Software Engineer' label="Job Title" />
             <x-inputs.text-area id="description" name="description" label="Job Description"
                 placeholder="We are seeking a skilled and motivated Software Developer to join our growing development team..." />
