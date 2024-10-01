@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::resource('jobs', JobController::class);
 Route::resource('jobs', JobController::class)->middleware('auth')->only(['create', 'edit', 'update', 'destroy']);
+Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
 Route::resource('jobs', JobController::class)->except(['create', 'edit', 'update', 'destroy']);
 
 Route::middleware('guest')->group(function () {
